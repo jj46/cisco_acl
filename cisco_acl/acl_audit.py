@@ -96,14 +96,14 @@ class AclAuditor:
                 if net == 'any':
                     continue
 
-                elif net.startswith('object-group') or net.startswith('addrgroup'):
+                if net.startswith('object-group') or net.startswith('addrgroup'):
                     og = net.split()[1]
                     if not re.match(dnsname_rx, og):
                         self.errors[i] = 'Invalid object-group: ' + og
                     else:
                         continue
 
-                elif net.startswith('host'):
+                if net.startswith('host'):
                     host = net.split()[1]
 
                     if re.match(ip_address_rx, host):
@@ -112,7 +112,10 @@ class AclAuditor:
                         except ValueError:
                             self.errors[i] = 'Invalid host IP: ' + host
                     else:
-                        self.errors[i] = 'Invalid host IP: ' + host
+                        if re.match('\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}', host):
+                            self.errors[i] = 'Invalid host IP: ' + host
+                        elif not re.match(dnsname_rx, host):
+                            self.errors[i] = 'Invalid host: ' + host
 
                 elif re.match(subnet_rx, net):
                     try:
