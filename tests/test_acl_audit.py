@@ -9,4 +9,4 @@ def test_acl_audit():
     assert a.errors[11].startswith('Invalid subnet')
     assert a.errors[12].startswith('Invalid host IP')
     assert a.errors[13].startswith('Invalid port')
-
+    assert len(a.errors) == 4
