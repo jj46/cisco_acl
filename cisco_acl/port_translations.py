@@ -14,7 +14,7 @@ Port types that require translations
 Examples:
 
 # Import the library:
-# from extranet.acl.port_translations import PortTranslator
+# from cisco_acl.port_translations import PortTranslator
 
 # Translate an IOS ACE from port numbers to port names
 >>> ace = 'permit tcp any any eq 80'
