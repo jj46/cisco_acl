@@ -140,6 +140,6 @@ class AclAuditor:
 
 if __name__ == '__main__':
     from sys import argv
-    a = AclAnalyzer(acl=argv[1])
+    a = AclAuditor(acl=argv[1])
     for n, e in sorted(a.errors.items()):
         print(n, e)
