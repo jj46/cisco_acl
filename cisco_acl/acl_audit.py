@@ -1,7 +1,6 @@
 """
 Audit an ACL, checking for the following:
 * Invalid ACEs (syntax errors)
-* Dead hosts (hosts that do not resolve in DNS)
 * Networking errors (invalid IP/subnets)
 * Invalid ports
 
