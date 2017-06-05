@@ -11,7 +11,7 @@ Supported ACL formats:
 import logging
 import os.path
 import re
-from ipaddress import ip_network
+from ipaddress import ip_network, ip_address
 from cisco_acl.regexes import ace_match, ip_address_rx, subnet_rx, dnsname_rx, keyword_rx
 from cisco_acl.port_translations import translate_port
 
@@ -91,27 +91,28 @@ class AclAuditor:
             self._audit_ports({i: perm})
 
     def _audit_networks(self, permission):
-        ip_rx = r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-
         for i, perm in permission.items():
             for net in [perm['source'], perm['destination']]:
                 if net == 'any':
                     continue
 
-                if net.startswith('object-group') or net.startswith('addrgroup'):
+                elif net.startswith('object-group') or net.startswith('addrgroup'):
                     og = net.split()[1]
                     if not re.match(dnsname_rx, og):
                         self.errors[i] = 'Invalid object-group: ' + og
                     else:
                         continue
 
-                if net.startswith('host'):
+                elif net.startswith('host'):
                     host = net.split()[1]
 
-                    if re.match(ip_rx, host):
-                        if not re.match(ip_address_rx, host):
+                    if re.match(ip_address_rx, host):
+                        try:
+                            ip = ip_address(host)
+                        except ValueError:
                             self.errors[i] = 'Invalid host IP: ' + host
-                            continue
+                    else:
+                        self.errors[i] = 'Invalid host IP: ' + host
 
                 elif re.match(subnet_rx, net):
                     try:
