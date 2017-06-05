@@ -50,6 +50,7 @@ ACL audit library
 ACL mask conversions library
 
 ::
+
     # Convert from wildcard to subnet mask
     >>> from cisco_acl import convert_mask
     >>> translate_mask(['permit tcp any 10.0.0.0 0.0.0.255'], 'wc', 'subnet')
