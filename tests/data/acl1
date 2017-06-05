@@ -1,0 +1,8 @@
+permit tcp 172.30.0.0 0.0.255.255 any established
+permit tcp any addrgroup some_hosts eq 80
+permit tcp any any eq 80 443
+permit tcp any any ra 20 22
+permit tcp object-group some_other_hosts host 1.1.1.1 range ftp-data ftp
+permit tcp 172.30.1.0 0.0.0.255 host www.google.com eq 80
+# ASA ACE
+access-list corporate_firewall_outbound extended permit tcp any host 77.100.100.221 eq 22

@@ -1,0 +1,13 @@
+permit tcp any host www.google.com eq 80
+permit tcp any host www.amazon.com eq 443
+permit tcp any any range ftp-data ftp
+permit tcp any host 1.1.1.1 eq 80
+permit tcp any 172.30.1.0 0.0.0.255 eq 80
+remark private networks
+permit tcp any object-group private_nets eq 80
+! A comment
+somejunkdatgaangknd
+permit tcp any host www.cisco.com eq 80
+permit tcp any 2.5.5.5 255.255.255.0 eq 80
+permit tcp any host 259.22.1.5 eq 80
+permit tcp any any eq https
