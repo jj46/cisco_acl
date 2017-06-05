@@ -57,7 +57,6 @@ class AclAuditor:
             10: 'Invalid ACE syntax',
         }
         """
-        self.cache = {}
         self._parse()
         self._run_audit()
 
@@ -137,9 +136,3 @@ class AclAuditor:
                         port_num = translate_port('ios', perm['protocol'], [p], 'to_number')[0]
                         if p == port_num:
                             self.errors[i] = 'Invalid port: {0} - {1} {2}'.format(self.acl_format, perm['protocol'], p)
-
-if __name__ == '__main__':
-    from sys import argv
-    a = AclAuditor(acl=argv[1])
-    for n, e in sorted(a.errors.items()):
-        print(n, e)
